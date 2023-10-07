@@ -15,6 +15,41 @@
     <div id="globeViz"></div>
 
     <script>
+        const container = `<style>html {
+  height: 100%;
+}
+
+body {
+  background: lightgrey;
+  height: 100%;
+  align-items: center;
+  justify-items: center;
+}
+
+.dialog {
+  display: inline-grid;
+  justify-items: center;
+  align-items: center;
+
+  margin-bottom: 32px;
+  background: white;
+  border: 2px solid grey;
+  border-radius: 4px;
+}
+
+.dialog span {
+  padding: 16px;
+}
+
+.dialog button {
+  margin-right: 4px;
+  height: 24px;
+  width: 24px;
+  position: relative; top: 0px; right: -30%;
+}
+</style><div class="dialog">
+            <button aria-label='delete item' `
+
         fetch('places/locations.json').then(res => res.json()).then(places => {
         const world = Globe()
             .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
@@ -22,6 +57,7 @@
             .htmlElementsData(places)
             .htmlElement(d => {
                 const el = document.createElement('div');
+                el.id = d.id;
                 fetch('places/' + d.name + '.html').then(res => res.text()).then(marker => {
                     el.innerHTML = marker;
                 });
@@ -34,15 +70,46 @@
                 el.onmouseleave = () => { el.style.color = d.color; el.style.width = `${d.size}px`}
                 el.onclick = () => {
                     fetch('places/' + d.name + 'Overlay.html').then(res => res.text()).then(i => {
-                        el.innerHTML = i;
-                        el.style.width = `400px`;
-                        el.style.cursor = 'none';
+                        el.innerHTML = container + `type='button' onclick='closeb(${d.id});'>X</button>` + i + `</div>`;
                     });
+                    el.onclick = () => { };
+                    el.onmouseover = () => { el.style.color = d.color; el.style.width = `${d.size}px` }
+                    el.style.width = d.sizeInfo;
+                    el.style.cursor = 'default';
                 };
                 return el;
             })
             (document.getElementById('globeViz'));
         });
+
+        function closeb(val) {
+            console.log("Nice");
+            var el = document.getElementById(val);
+            fetch('places/locations.json').then(res => res.json()).then(f => f[val]).then(d => {
+                fetch('places/' + d.name + '.html').then(res => res.text()).then(marker => {
+                    el.innerHTML = marker;
+                });
+            el.style.color = d.color;
+            el.style.width = `${d.size}px`;
+
+            el.style['pointer-events'] = 'auto';
+            el.style.cursor = 'pointer';
+            el.onmouseover = () => { el.style.color = "green"; el.style.width = `${d.size * 1.1}px` }
+            el.onmouseleave = () => { el.style.color = d.color; el.style.width = `${d.size}px` }
+            el.onclick = () => {
+                fetch('places/' + d.name + 'Overlay.html').then(res => res.text()).then(i => {
+                    el.innerHTML = container + `type='button' onclick ='closeb(${d.id})'>X</button>` + i + `</div>`;
+                });
+                el.onclick = () => { };
+                el.onmouseover = () => { el.style.color = d.color; el.style.width = `${d.size}px` }
+                el.style.width = d.sizeInfo;
+                el.style.cursor = 'default';
+                el.id = d.id;
+            };
+            return el;
+        });
+        }
+
 
     </script>
 </body>

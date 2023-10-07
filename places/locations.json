@@ -1,16 +1,20 @@
 [
   {
+    "id":  0,
     "name": "bikini",
     "lat": 11.6,
     "lng": 165.4,
     "size": 25,
-    "color": "red"
+    "color": "red",
+    "sizeInfo": 400
   },
   {
+    "id": 1,
     "name": "greenland",
     "lat": 65.3,
     "lng": -45.63,
     "size": 25,
-    "color": "red"
+    "color": "red",
+    "sizeInfo": 400
   }
 ]
