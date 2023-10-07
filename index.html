@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<head>
+    <style>
+        body {
+            margin: 0;
+        }
+    </style>
+
+    <script src="//unpkg.com/globe.gl"></script>
+    <!--  <script src="../../dist/globe.gl.js"></script>-->
+</head>
+
+<body>
+    <h1> Aquaplay </h1>
+    <div id="globeViz"></div>
+
+    <script>
+        fetch('places/locations.json').then(res => res.json()).then(places => {
+        const world = Globe()
+            .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
+            .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png')
+            .htmlElementsData(places)
+            .htmlElement(d => {
+                const el = document.createElement('div');
+                fetch('places/' + d.name + '.html').then(res => res.text()).then(marker => {
+                    el.innerHTML = marker;
+                });
+                el.style.color = d.color;
+                el.style.width = `${d.size}px`;
+
+                el.style['pointer-events'] = 'auto';
+                el.style.cursor = 'pointer';
+                el.onmouseover = () => { el.style.color = "green"; el.style.width = `${d.size*1.1}px` }
+                el.onmouseleave = () => { el.style.color = d.color; el.style.width = `${d.size}px`}
+                el.onclick = () => {
+                    fetch('places/' + d.name + 'Overlay.html').then(res => res.text()).then(i => {
+                        el.innerHTML = i;
+                        el.style.width = `400px`;
+                        el.style.cursor = 'none';
+                    });
+                };
+                return el;
+            })
+            (document.getElementById('globeViz'));
+        });
+
+    </script>
+</body>
