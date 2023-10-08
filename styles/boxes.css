@@ -1,0 +1,15 @@
+@font-face {
+    font-family: "Ocean Regular";
+    src: url(../fonts/HandoSoftTrial-Regular.ttf);
+}
+
+@font-face {
+    font-family: "Ocean Bold";
+    src: url(../fonts/HandoSoftTrial-Bold.ttf);
+}
+
+.name {
+    font-size: 10px;
+    color: white;
+    font-family: "Ocean Regular";
+}
