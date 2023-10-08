@@ -1,13 +1,12 @@
 <head>
-    <link rel="stylesheet" href="styles/index.css">
+    <link rel="stylesheet" href="../styles/globe.css">
     <style>
         body {
             margin: 0;
         }
     </style>
-
     <script src="//unpkg.com/globe.gl"></script>
-    <!--  <script src="../../dist/globe.gl.js"></script>-->
+    <!-- <script src="../../dist/globe.gl.js"></script> -->
 </head>
 
 <body>
@@ -17,8 +16,7 @@
     <div id="globeViz"></div>
 
     <script>                         
-
-        fetch('places/locations.json').then(res => res.json()).then(places => {
+        fetch('../places/locations.json').then(res => res.json()).then(places => {
         const world = Globe()
             .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
             .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png')
@@ -26,7 +24,7 @@
             .htmlElement(d => {
                 const el = document.createElement('div');
                 el.id = d.id;
-                fetch('places/' + d.name + '.html').then(res => res.text()).then(marker => {
+                fetch('../places/' + d.name + '.html').then(res => res.text()).then(marker => {
                     el.innerHTML = marker;
                 });
                 el.style.color = d.color;
@@ -37,7 +35,7 @@
                 el.onmouseover = () => { el.style.color = "green"; el.style.width = `${d.size*1.1}px` }
                 el.onmouseleave = () => { el.style.color = d.color; el.style.width = `${d.size}px`}
                 el.onclick = () => {
-                    fetch('places/' + d.name + 'Overlay.html').then(res => res.text()).then(content => {
+                    fetch('../places/' + d.name + 'Overlay.html').then(res => res.text()).then(content => {
                         el.innerHTML = `<div class="mapPopUp">
                     <button aria-label='delete item' type='button' onclick='closeb(${d.id})'>X</button>` + content + `</div>`;
                     });
@@ -52,10 +50,9 @@
         });
 
         function closeb(val) {
-            console.log("Nice");
             var el = document.getElementById(val);
-            fetch('places/locations.json').then(res => res.json()).then(f => f[val]).then(d => {
-                fetch('places/' + d.name + '.html').then(res => res.text()).then(marker => {
+            fetch('../places/locations.json').then(res => res.json()).then(f => f[val]).then(d => {
+                fetch('../places/' + d.name + '.html').then(res => res.text()).then(marker => {
                     el.innerHTML = marker;
                 });
             el.style.color = d.color;
@@ -66,7 +63,7 @@
             el.onmouseover = () => { el.style.color = "green"; el.style.width = `${d.size * 1.1}px` }
             el.onmouseleave = () => { el.style.color = d.color; el.style.width = `${d.size}px` }
             el.onclick = () => {
-                fetch('places/' + d.name + 'Overlay.html').then(res => res.text()).then(content => {
+                fetch('../places/' + d.name + 'Overlay.html').then(res => res.text()).then(content => {
                     el.innerHTML = `<div class="mapPopUp">
                     <button aria-label='delete item' type='button' onclick='closeb(${d.id})'>X</button>` + content + `</div>`;
                 });
