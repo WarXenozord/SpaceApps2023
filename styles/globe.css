@@ -1,0 +1,47 @@
+@font-face {
+    font-family: "Ocean Regular";
+    src: url(../fonts/HandoSoftTrial-Regular.ttf);
+}
+
+@font-face {
+    font-family: "Ocean Bold";
+    src: url(../fonts/HandoSoftTrial-Bold.ttf);
+}
+
+h1 {
+    margin-left: 2%;
+    font-size: 40px;
+    font-family: "Ocean Bold";
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    background: linear-gradient(#72aab4, #042633);
+    margin: 0px;
+}
+
+.mapPopUp {
+    display: inline-grid;
+    justify-items: center;
+    align-items: center;
+    margin-bottom: 32px;
+    background: white;
+    border: 2px solid grey;
+    border-radius: 4px;
+}
+
+    .mapPopUp span {
+        padding: 16px;
+    }
+
+    .mapPopUp button {
+        margin-right: 4px;
+        height: 24px;
+        width: 24px;
+        position: relative;
+        top: 0px;
+        right: -35%;
+    }
